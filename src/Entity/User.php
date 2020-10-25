@@ -202,22 +202,22 @@ class User implements UserInterface
 
     public function getRoles()
     {
+        // Récupère le array_collections des roles de l'utilistaeur
         $roles = $this->userRoles->toArray();
+        dump($roles);
 
+        // Transform le array_collection en un array simple
         $roles = $this->userRoles->map(function($role){
             return $role->getTitle();
-        });
+        })->toArray();
 
-        dump($roles);
-       
-        if($this->getUserRoles() == 'ROLE_PUBLIC'){
-            array_slice($roles, 1, count($roles));
+
+        if(!(in_array("ROLE_PUBLIC", $roles))){
+            
+            $roles[] = "ROLE_USER";
         }
-        dump($roles);
-        die();
 
-        return ['ROLE_USER'];
-
+        return $roles;
     }
 
     /**
