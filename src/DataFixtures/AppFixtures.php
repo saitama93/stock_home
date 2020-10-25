@@ -29,10 +29,18 @@ class AppFixtures extends Fixture
         $users = [];
         $genres = ['male', 'female'];
 
+        // CREATION DES ROLES
         $adminRole = new Role();
-
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
+
+        $publicRole = new Role();
+        $publicRole->setTitle("ROLE_PUBLIC");
+        $manager->persist($publicRole);
+
+        $userRole = new Role();
+        $userRole->setTitle("ROLE_USER");
+        $manager->persist($userRole);
 
         $admin = new User();
 
@@ -42,13 +50,10 @@ class AppFixtures extends Fixture
         ->setPassword($this->encoder->encodePassword($admin, "password123!"))
         ->setPresent(1)
         ->setUsername("Igal")
-        ->addUserRole($adminRole);
+        ->addUserRole($adminRole, $userRole);
         $manager->persist($admin);
 
-        $publicRole = new Role();
-        $publicRole->setTitle("ROLE_PUBLIC");
-        $manager->persist($publicRole);
-
+       
         $public = new User();
 
         $public->setFirstName("Public")
@@ -57,7 +62,7 @@ class AppFixtures extends Fixture
         ->setPassword($this->encoder->encodePassword($public, "password123!"))
         ->setPresent(1)
         ->setUsername("Publique")
-        ->addUserRole($publicRole);
+        ->addUserRole($publicRole, $userRole);
 
         $manager->persist($public);
 
@@ -173,7 +178,8 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->email)
                 ->setUsername($faker->userName)
                 ->setPresent(rand(0, 1))
-                ->setPassword($hash);
+                ->setPassword($hash)
+                ->addUserRole($userRole);
 
             $manager->persist($user);
             $users[] = $user;
