@@ -204,18 +204,20 @@ class User implements UserInterface
     {
         // Récupère le array_collections des roles de l'utilistaeur
         $roles = $this->userRoles->toArray();
-        dump($roles);
 
         // Transform le array_collection en un array simple
         $roles = $this->userRoles->map(function($role){
             return $role->getTitle();
         })->toArray();
 
-
+        // Si l'utilisateur à le role public on lui enlève le role user
         if(!(in_array("ROLE_PUBLIC", $roles))){
             
             $roles[] = "ROLE_USER";
         }
+
+        // ON enlève les doublons
+        $roles = array_unique($roles);
 
         return $roles;
     }
