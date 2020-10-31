@@ -15,6 +15,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminUserController extends AbstractController
 {
     /**
+     * Permet d'afficher la liste des utilisateurs 
+     * 
      * @Route("/admin/user/list/{page<\d+>?1}", name="AdminUser.index")
      */
     public function index($page, PaginationService $paginator)
