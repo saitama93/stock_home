@@ -168,6 +168,7 @@ class AppFixtures extends Fixture
         ];
 
 
+
         for ($z = 1; $z <= 50; $z++) {
             $user = new User();
             $genre = $faker->randomElement($genres);
@@ -195,9 +196,9 @@ class AppFixtures extends Fixture
             $manager->persist($status);
         }
 
-        for ($j = 0; $j <= count($locations); $j++) {
+        for ($j = 1; $j <= 30; $j++) {
             $location = new Location();
-            $wording = mt_rand(0, count($locations) - 1);
+            $wording = $faker->randomElement($locations[0]);
             $location->setWording($wording);
 
             $manager->persist($location);
