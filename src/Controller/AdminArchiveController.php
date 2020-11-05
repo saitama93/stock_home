@@ -8,6 +8,7 @@ use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminArchiveController extends AbstractController
@@ -16,6 +17,7 @@ class AdminArchiveController extends AbstractController
      * Permet l'accès aux archives
      * 
      * @Route("/admin/archives", name="AdminArchive.index")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function index()
     {
@@ -23,7 +25,10 @@ class AdminArchiveController extends AbstractController
     }
 
     /**
+     * Liste des comptes utilisateurs archivé
+     * 
      * @Route("/admin/archive/list/{page<\d+>?1}", name="AdminArchive.users")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function users($page, PaginationService $paginator)
     {
@@ -41,6 +46,7 @@ class AdminArchiveController extends AbstractController
      * Permet de vraiment supprimer un utilisateur
      * 
      * @Route("/admin/archive/user/delete/{id}", name="AdminArchive.userDelete")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function deleteUser(Request $request, $id, UserRepository $userRepo, EntityManagerInterface $em)
     {
@@ -68,6 +74,7 @@ class AdminArchiveController extends AbstractController
      * Permet d'activer un compte
      * 
      * @Route("/admin/archive/user/activate/{id}", name="AdminArchive.activateAccount")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function activateAccount($id, EntityManagerInterface $em, UserRepository $userRepo)
     {

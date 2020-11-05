@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminLocationController extends AbstractController
@@ -17,6 +18,7 @@ class AdminLocationController extends AbstractController
      * Permet d'afficher la liste des sites de l'application
      * 
      * @Route("/admin/location/list/{page<\d+>?1}", name="AdminLocation.index")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function index($page, PaginationService $paginator): Response
     {
@@ -33,6 +35,7 @@ class AdminLocationController extends AbstractController
      * Permet de supprimer un site
      * 
      * @Route("/admin/location/delete/{id}", name ="AdminLocation.delete")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function delete($id, Request $request, LocationRepository $locationRepo, EntityManagerInterface $em){
 

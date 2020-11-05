@@ -9,6 +9,7 @@ use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -18,9 +19,15 @@ class AdminUserController extends AbstractController
      * Permet d'afficher la liste des utilisateurs 
      * 
      * @Route("/admin/user/list/{page<\d+>?1}", name="AdminUser.index")
+     * @IsGranted("ROLE_ADMIN"))
      */
-    public function index($page, PaginationService $paginator)
+    public function index($page, PaginationService $paginator, UserRepository $repo)
     {
+        // $u = $repo->find(470);
+        // $i = $this->getUser();
+
+        // dd($u, $i);
+
         $paginator->setEntityClass(User::class)
             ->setCurrentPage($page)
             ->setLimit(10);
@@ -35,6 +42,7 @@ class AdminUserController extends AbstractController
      * Affiche la liste des utilisateurs
      * 
      * @Route("/admin/user/add", name="AdminUser.add")
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
@@ -71,6 +79,7 @@ class AdminUserController extends AbstractController
      * Permet de modifier les utilisateurs
      * 
      * @Route("admin/user/edit/{id}",name="AdminUser.edit",methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN"))
      * 
      */
     public function edit(Request $request, $id, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, UserRepository $userRepo)
@@ -145,6 +154,7 @@ class AdminUserController extends AbstractController
      * Permet de supprimer un utilisateur avec page de confirmation
      * 
      * @Route("admin/user/delete/{id}",name="AdminUser.delete",methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN"))
      */
     public function archive(Request $request, $id, UserRepository $userRepo, EntityManagerInterface $em)
     {

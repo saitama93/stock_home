@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccountController extends AbstractController
@@ -31,4 +32,14 @@ class AccountController extends AbstractController
      * @return void
      */
     public function logout(){ }
+
+    /**
+     * Permet de visualiser le profil de l'utilisateur connecté
+     * 
+     * @Route("/account/profile", name="Account.profile")
+     */
+    public function profile()
+    {
+        return $this->render('admin/account/index.html.twig');
+    }
 }
