@@ -33,6 +33,7 @@ class AccountController extends AbstractController
      */
     public function logout(){ }
 
+    
     /**
      * Permet de visualiser le profil de l'utilisateur connecté
      * 
@@ -40,6 +41,6 @@ class AccountController extends AbstractController
      */
     public function profile()
     {
-        return $this->render('admin/account/index.html.twig');
+        return $this->render('admin/account/profile.html.twig');
     }
 }
