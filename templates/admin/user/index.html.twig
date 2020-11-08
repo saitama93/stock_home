@@ -7,14 +7,7 @@
 
 	<div class="container-fluid">
 
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item active" aria-current="page">
-					<a href="#">Gestion</a>
-				</li>
-				<li class="breadcrumb-item active" aria-current="page">Utilisateurs</li>
-			</ol>
-		</nav>
+		{% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Utilisateurs'} %}
 
 		<h1 class="h1 my-3">
 			{% if present == true %}

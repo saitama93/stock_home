@@ -27,7 +27,7 @@ class AdminLocationController extends AbstractController
             ->setLimit(10);
 
         return $this->render('admin/location/index.html.twig',[
-            'paginator' => $paginator
+            'paginator' => $paginator,
         ]);
     }
 
