@@ -3,11 +3,14 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Mark;
 use App\Entity\Role;
+use App\Entity\Type;
 use App\Entity\User;
 use App\Entity\Status;
 use App\Entity\Location;
 use App\Entity\Equipment;
+use App\Entity\Specificity;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -42,6 +45,11 @@ class AppFixtures extends Fixture
         $userRole->setTitle("ROLE_USER");
         $manager->persist($userRole);
 
+        $allRoles = [];
+        $allRoles = $userRole;
+
+        // CREATIONS DES USERS
+
         $admin = new User();
 
         $admin->setFirstName("Igal")
@@ -66,14 +74,14 @@ class AppFixtures extends Fixture
 
         $manager->persist($public);
 
-        $statutes[] = [
+        $statutes = [
             'SAV',
             'En stock',
             'A réformer',
             'Déployé sur le site'
         ];
 
-        $locations[] = [
+        $locations = [
             'amancey.ce',
             'audincourt.annexe-champs',
             'audincourt.ase-pmi',
@@ -167,6 +175,32 @@ class AppFixtures extends Fixture
             'valentigney.cms-zac'
         ];
 
+        $specificities = [
+            'i3',
+            'i5',
+            'i7',
+            'HD',
+            '4K'
+        ];
+
+        $brands = [
+            'HP',
+            'Canon',
+            'Ricoh',
+            'Sony',
+            'NetGear',
+            'D-Link',
+            'TP-Link'
+        ];
+
+        $types =  [
+            'Ordinateur',
+            'Imprimante',
+            'Switch',
+            'Rooter',
+            'Cable'
+        ];
+
 
 
         for ($z = 1; $z <= 50; $z++) {
@@ -187,22 +221,47 @@ class AppFixtures extends Fixture
         }
 
 
-        for ($i = 1; $i <= 4; $i++) {
+        for ($i = 0; $i <= 3; $i++) {
 
             $status = new Status();
-            // $item = $statutes;
-            $status->setWording('En stock');
+            $wording = $statutes[$i];
+            $status->setWording($wording);
 
             $manager->persist($status);
         }
 
-        for ($j = 1; $j <= 30; $j++) {
+        for ($j = 0; $j <= 89; $j++) {
             $location = new Location();
-            $wording = $faker->randomElement($locations[0]);
+            $wording = $locations[$j];
             $location->setWording($wording);
 
             $manager->persist($location);
         }
+
+        for ($l = 0; $l <= 4; $l++) {
+            $specificity = new Specificity();
+            $wording = $specificities[$l];
+            $specificity->setWording($wording);
+
+            $manager->persist($specificity);
+        }
+
+        for ($m = 0; $m <= 6; $m++) {
+            $mark = new Mark();
+            $wording = $brands[$m];
+            $specificity->setWording($wording);
+
+            $manager->persist($specificity);
+        }
+
+        for ($t = 0; $t <= 4; $t++) {
+            $type = new Type();
+            $wording = $types[$t];
+            $type->setWording($wording);
+
+            $manager->persist($type);
+        }
+
         $manager->flush();
     }
 }
