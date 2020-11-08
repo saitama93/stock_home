@@ -249,9 +249,9 @@ class AppFixtures extends Fixture
         for ($m = 0; $m <= 6; $m++) {
             $mark = new Mark();
             $wording = $brands[$m];
-            $specificity->setWording($wording);
+            $mark->setWording($wording);
 
-            $manager->persist($specificity);
+            $manager->persist($mark);
         }
 
         for ($t = 0; $t <= 4; $t++) {
