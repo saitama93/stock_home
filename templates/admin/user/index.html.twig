@@ -6,8 +6,12 @@
 {% block body %}
 
 	<div class="container-fluid">
-
-		{% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Utilisateurs'} %}
+		{% if present == false %}
+			{% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Utilisateurs', GoBack : 'Archive', Link : path('AdminArchive.index') } %}
+		{% else %}
+		{% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Utilisateurs', GoBack : 'Gestion', Link : path('AdminDashboard.index') } %}
+			
+		{% endif %}
 
 		<h1 class="h1 my-3">
 			{% if present == true %}
