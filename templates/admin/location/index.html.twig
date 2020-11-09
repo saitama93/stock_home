@@ -7,7 +7,7 @@
 {% block body %}
     <div class="container-fluid">
 
-       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Sites'} %}
+       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Sites', GoBack : 'Gestion', Link : path('AdminDashboard.index') } %}
 
         <h1 class="h1 my-3">Gestion des sites</h1>
 
