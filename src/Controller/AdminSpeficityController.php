@@ -107,7 +107,7 @@ class AdminSpeficityController extends AbstractController
 
             $this->addFlash(
                 'danger',
-                "La specificité {$specificity->getWording()} est définitivement supprimé."
+                "La specificité {$specificity->getWording()} est définitivement supprimée."
             );
 
             return $this->redirectToRoute('AdminSpecificity.index');

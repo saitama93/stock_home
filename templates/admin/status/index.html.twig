@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Statut
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Statuts', Link : path('AdminDashboard.index') } %}
+
+        <h1 class="h1 my-3">Gestion des statuts</h1>
+
+        <a href="{{ path('AdminStatus.add') }}" class="btn btn-success my-5">
+			<i class="fas fa-plus-circle"></i>
+		</a>
+
+        <table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Libellé</th>
+					<th class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for status in paginator.data %}
+
+					<tr>
+						<td>{{ status.id }}</td>
+						<td>{{ status.wording }}</td>
+                    	<td class="text-center">
+                            <a title="Modifier le statut" href="{{ path('AdminStatus.edit', {'id' : status.id}) }}" class="btn btn-primary mr-2">
+								<i class="fas fa-edit"></i>
+							</a>
+                            <a href="{{ path('AdminStatus.delete', {'id' : status.id}) }}" class="btn btn-danger ml-2" title="Supprimer le statut">
+									<i class="fas fa-trash"></i>
+							</a>
+                        </td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		{{ paginator.display }}
+    </div>
+    
+{% endblock %}
