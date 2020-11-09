@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Matériels
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Matériels', GoBack : 'Gestion', Link : path('AdminDashboard.index') } %}
+
+        {% if deleted == false %}
+            <h1 class="h1 my-3">Gestion des matériels</h1>
+
+             <a href="{# {{ path('AdminEquipment.add') }} #}" class="btn btn-success my-5">
+			<i class="fas fa-plus-circle"></i>
+		</a>
+        {% else %}
+            <h1 class="h1 my-3">Archive des matériels</h1>
+        {% endif %}
+
+
+        <table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Id</th>
+                    <th>Libellé</th>
+					<th>Nom Dernier intervenant</th>
+					<th>Marque</th>
+					<th>Spécificité</th>
+					<th>Lieu de stock</th>
+					<th>Statut</th>
+					<th>Manipulé le</th>
+					<th class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for equipment in paginator.data %}
+                    {% if deleted == equipment.deleted %}
+
+                        <tr>
+                            <td>{{ equipment.id }}</td>
+                            <td>{{ equipment.type.wording }}</td>
+                            <td>{{ equipment.user.firstName }}</td>
+                            <td>{{ equipment.mark.wording }}</td>
+                            <td>{{ equipment.specificity.wording }}</td>
+                            <td>{{ equipment.location.wording }}</td>
+                            <td>{{ equipment.status.wording }}</td>
+                            <td>{{ equipment.manipulatedAt | date ('D/M/Y H:i') }}</td>
+                            <td class="text-center">
+                                <a title="Modifier les informations" href="{# {{ path('AdminEquipment.edit', {'id' : equipment.id}) }} #}" class="btn btn-primary mr-2" title="Modifier le matériel">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ path('AdminEquipment.delete', {'id' : equipment.id}) }}" class="btn btn-danger ml-2" title="Enlever du stock">
+                                        <i class="fas fa-file-archive"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+
+		{{ paginator.display }}
+    </div>
+    
+{% endblock %}

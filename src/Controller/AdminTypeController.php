@@ -98,7 +98,7 @@ class AdminTypeController extends AbstractController
      * @Route("/admin/type/delete/{id}", name ="AdminType.delete")
      * @IsGranted("ROLE_ADMIN"))
      */
-    public function delete($id, Request $request, TYpeRepository $typeRepo, EntityManagerInterface $em){
+    public function delete($id, Request $request, TypeRepository $typeRepo, EntityManagerInterface $em){
 
         $type = $typeRepo->find($id);
 
