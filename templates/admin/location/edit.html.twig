@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="container-fluid">
-        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Nouveau site', GoBack : 'Liste des sites', Link : path('AdminLocation.index') } %}
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Modification site', GoBack : 'Liste des sites', Link : path('AdminLocation.index') } %}
 
        {% include "admin/forms/_add.html.twig"  with {Button : 'Modifier'}%}
     </div>

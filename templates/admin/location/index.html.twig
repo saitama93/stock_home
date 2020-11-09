@@ -30,10 +30,10 @@
 						<td>{{ location.id }}</td>
 						<td>{{ location.wording }}</td>
                     	<td class="text-center">
-                            <a title="Modifier les informations" href="{{ path('AdminLocation.edit', {'id' : location.id}) }}" class="btn btn-primary mr-2">
+                            <a title="Modifier les informations" href="{{ path('AdminLocation.edit', {'id' : location.id}) }}" class="btn btn-primary mr-2" title="Modifier le site">
 								<i class="fas fa-edit"></i>
 							</a>
-                            <a href="{{ path('AdminLocation.delete', {'id' : location.id}) }}" class="btn btn-danger ml-2" title="Supprimer le compte">
+                            <a href="{{ path('AdminLocation.delete', {'id' : location.id}) }}" class="btn btn-danger ml-2" title="Supprimer le site">
 									<i class="fas fa-trash"></i>
 							</a>
                         </td>
