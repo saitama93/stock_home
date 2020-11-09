@@ -8,10 +8,6 @@
     <div class="container-fluid">
         {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Nouveau site', GoBack : 'Liste des sites', Link : path('AdminLocation.index') } %}
 
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-
-        <button type="submit" class="btn btn-primary">Modifier</button>
-        {{ form_end(form) }}
+       {% include "admin/forms/_add.html.twig"  with {Button : 'Modifier'}%}
     </div>
 {% endblock %}
