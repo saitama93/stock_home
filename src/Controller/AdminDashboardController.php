@@ -9,6 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminDashboardController extends AbstractController
 {
     /**
+     * Page d'accueilde l'admin avec stats
+     * 
+     * @Route("/admin/home", name="AdminDashboard.home") 
+     */
+    public function home(){
+
+        return $this->render('admin/dashboard/home.html.twig');
+    }
+
+    
+    /**
      * Page d'accueil de l'adminstrateur
      * 
      * @Route("/admin/dashboard", name="AdminDashboard.index")
