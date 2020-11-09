@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}  
+
+{% block title %}
+    Modification d'un type
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Modification type', GoBack : 'Liste des types', Link : path('AdminType.index') } %}
+
+       {% include "admin/forms/_add.html.twig"  with {Button : 'Modifier'}%}
+    </div>
+{% endblock %}
