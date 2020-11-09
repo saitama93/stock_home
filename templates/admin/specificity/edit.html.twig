@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    modification de spécificité
+{% endblock %}
+
+{% block body %}
+   <div class="container-fluid my-5">
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'modification de spécificité', GoBack : 'Liste des spécificités', Link : path('AdminSpecificity.index') } %}
+
+        {% include "admin/forms/_add.html.twig" with { Button : 'Modifier' } %}
+   </div>
+{% endblock %}

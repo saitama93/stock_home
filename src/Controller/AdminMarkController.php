@@ -51,7 +51,7 @@ class AdminMarkController extends AbstractController
 
             $this->addFlash(
                 'success', 
-                "La marque {$mark->getWording()} a bien été ajouté." 
+                "La marque {$mark->getWording()} a bien été ajoutée." 
             );
 
             return $this->redirectToRoute('AdminMark.index');
