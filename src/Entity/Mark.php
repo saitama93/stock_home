@@ -2,13 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\MarkRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MarkRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MarkRepository::class)
+ * @UniqueEntity
+ * (
+ * fields={"wording"},
+ * message="Cette marque existe déjà dans votre liste de marque connu par l'application"
+ * )
  */
 class Mark
 {

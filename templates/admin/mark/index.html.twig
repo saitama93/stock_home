@@ -7,11 +7,11 @@
 {% block body %}
     <div class="container-fluid">
 
-       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Marques'} %}
+       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Marques', Link : path('AdminDashboard.index') } %}
 
         <h1 class="h1 my-3">Gestion des Marque</h1>
 
-        <a href="#" class="btn btn-success my-5">
+        <a href="{{ path('AdminMark.add') }}" class="btn btn-success my-5">
 			<i class="fas fa-plus-circle"></i>
 		</a>
 
@@ -24,16 +24,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for marque in paginator.data %}
+				{% for mark in paginator.data %}
 
 					<tr>
-						<td>{{ marque.id }}</td>
-						<td>{{ marque.wording }}</td>
+						<td>{{ mark.id }}</td>
+						<td>{{ mark.wording }}</td>
                     	<td class="text-center">
-                            <a title="Modifier les informations" href="#" class="btn btn-primary mr-2">
+                            <a title="Modifier les informations" href="{{ path('AdminMark.edit', {'id' : mark.id}) }}" class="btn btn-primary mr-2">
 								<i class="fas fa-edit"></i>
 							</a>
-                            <a href="#" class="btn btn-danger ml-2" title="Supprimer le compte">
+                            <a href="{{ path('AdminMark.delete', {'id' : mark.id}) }}" class="btn btn-danger ml-2" title="Supprimer le compte">
 									<i class="fas fa-trash"></i>
 							</a>
                         </td>
