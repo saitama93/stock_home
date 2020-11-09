@@ -1,9 +1,7 @@
- {% set goBack = 'Gestion' %}
- 
  <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item active" aria-current="page">
-			<a href="{{ path('AdminDasboard.index') }}">{{ goBack }}</a>
+			<a href={{ Link |default("{{ path('AdminDashboard.index') }}") }}>{{ GoBack |default ('Gestion') }}</a>
 		</li>
 		<li class="breadcrumb-item active" aria-current="page">{{ Title }}</li>
 	</ol>

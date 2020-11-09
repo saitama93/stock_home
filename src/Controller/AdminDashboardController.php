@@ -11,7 +11,7 @@ class AdminDashboardController extends AbstractController
     /**
      * Page d'accueil de l'adminstrateur
      * 
-     * @Route("/admin/dashboard", name="AdminDasboard.index")
+     * @Route("/admin/dashboard", name="AdminDashboard.index")
      * @IsGranted("ROLE_ADMIN"))
      */
     public function index()

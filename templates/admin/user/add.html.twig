@@ -4,16 +4,12 @@
 	Nouveau utilisateur
 {% endblock %}
 {% block body %}
+
+	<div class="container-fluid">
+	{% include "admin/partials/miniHeader.html.twig" with { Title  : 'Modification utilisateur'}  %}
+
 	<div class="well">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item">
-					<a href="{{ path('AdminUser.index') }}">User</a>
-				</li>
-				<li class="breadcrumb-item active" aria-current="page">Ajouter</li>
-			</ol>
-		</nav>
-		
+			
 		{{ form_start(form) }}
 		{{ form_errors(form) }}
 		<div class="form-group row">
@@ -67,6 +63,7 @@
 	<div id="modal1" class="modal">
 		<div class="modal-content"></div>
 		<div class="modal-footer"></div>
+	</div>
 	</div>
 {% endblock %}
 {% block javascripts %}

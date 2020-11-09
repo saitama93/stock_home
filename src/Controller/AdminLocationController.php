@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Form\LocationType;
 use App\Service\PaginationService;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,6 +29,66 @@ class AdminLocationController extends AbstractController
 
         return $this->render('admin/location/index.html.twig',[
             'paginator' => $paginator,
+        ]);
+    }
+
+    /**
+     * Permet d'ajouter un site
+     * 
+     * @Route("/admin/location/add", name ="AdminLocation.add")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function add(Request $request, EntityManagerInterface $em){
+
+        $location = new Location();
+        $form = $this->createForm(LocationType::class, $location);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($location);
+            $em->flush();
+
+            $this->addFlash(
+                'success', 
+                "Le site {$location->getWording()} a bien été ajouté." 
+            );
+
+            return $this->redirectToRoute('AdminLocation.index');
+        }
+
+        return $this->render('admin/location/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Permet de modifier un site
+     * 
+     * @Route("/admin/location/edit/{id}", name ="AdminLocation.edit")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function edit($id, Request $request, EntityManagerInterface $em, LocationRepository $locationRepo){
+
+        $location = $locationRepo->find($id);
+
+        $form = $this->createForm(LocationType::class, $location);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($location);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                "Succès de la modification du libellé"
+            );
+
+            return $this->redirectToRoute('AdminLocation.index');
+        }
+
+        return $this->render('admin/location/edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

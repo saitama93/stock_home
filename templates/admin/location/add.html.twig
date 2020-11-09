@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Nouveau site
+{% endblock %}
+
+{% block body %}
+   <div class="container-fluid my-5">
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Nouveau site', GoBack : 'Liste des sites', Link : path('AdminLocation.index') } %}
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        {{ form_end(form) }}
+   </div>
+{% endblock %}

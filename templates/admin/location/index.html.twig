@@ -9,9 +9,9 @@
 
        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Sites'} %}
 
-        <h1 class="h1 my-3">Gestions des sites</h1>
+        <h1 class="h1 my-3">Gestion des sites</h1>
 
-        <a href="#" class="btn btn-success my-5">
+        <a href="{{ path('AdminLocation.add') }}" class="btn btn-success my-5">
 			<i class="fas fa-plus-circle"></i>
 		</a>
 
@@ -30,7 +30,7 @@
 						<td>{{ location.id }}</td>
 						<td>{{ location.wording }}</td>
                     	<td class="text-center">
-                            <a title="Modifier les informations" href="#" class="btn btn-primary mr-2">
+                            <a title="Modifier les informations" href="{{ path('AdminLocation.edit', {'id' : location.id}) }}" class="btn btn-primary mr-2">
 								<i class="fas fa-edit"></i>
 							</a>
                             <a href="{{ path('AdminLocation.delete', {'id' : location.id}) }}" class="btn btn-danger ml-2" title="Supprimer le compte">
