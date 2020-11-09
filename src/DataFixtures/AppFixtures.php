@@ -217,7 +217,7 @@ class AppFixtures extends Fixture
                 ->addUserRole($userRole);
 
             $manager->persist($user);
-            $users[] = $user;
+            $usersCollection[] = $user;
         }
 
 
@@ -228,6 +228,7 @@ class AppFixtures extends Fixture
             $status->setWording($wording);
 
             $manager->persist($status);
+            $statutesCollection[] = $status;
         }
 
         for ($j = 0; $j <= 89; $j++) {
@@ -236,6 +237,7 @@ class AppFixtures extends Fixture
             $location->setWording($wording);
 
             $manager->persist($location);
+            $locationsCollection[] = $location;
         }
 
         for ($l = 0; $l <= 4; $l++) {
@@ -244,6 +246,7 @@ class AppFixtures extends Fixture
             $specificity->setWording($wording);
 
             $manager->persist($specificity);
+            $specificitiesCollection[] = $specificity;
         }
 
         for ($m = 0; $m <= 6; $m++) {
@@ -252,6 +255,7 @@ class AppFixtures extends Fixture
             $mark->setWording($wording);
 
             $manager->persist($mark);
+            $brandsCollection[] = $mark;
         }
 
         for ($t = 0; $t <= 4; $t++) {
@@ -260,6 +264,26 @@ class AppFixtures extends Fixture
             $type->setWording($wording);
 
             $manager->persist($type);
+            $typesCollection[] = $type;
+        }
+
+        for ($ma=0; $ma < 50; $ma++) { 
+            $equipment = new Equipment();
+            $equipment->setUser($faker->randomElement($usersCollection))
+                    ->setMark($faker->randomElement($brandsCollection))
+                    ->setSpecificity($faker->randomElement($specificitiesCollection))
+                    ->setLocation($faker->randomElement($locationsCollection))
+                    ->setStatus($faker->randomElement($statutesCollection))
+                    ->setType($faker->randomElement($typesCollection))
+                    ->setSerialNumber(\uniqid())
+                    ->setManipulatedAt($faker->dateTime('now', null))
+                    ->setDeleted(mt_rand(0,1));
+
+            $keywords = "{$equipment->getMark()->getWording()}, {$equipment->getSpecificity()->getWording()}";
+
+            $equipment->setKeywords($keywords);
+
+            $manager->persist($equipment);
         }
 
         $manager->flush();
