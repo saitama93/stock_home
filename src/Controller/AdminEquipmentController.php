@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminEquipmentController extends AbstractController
 {
    /**
-     * Permet d'afficher la liste des types de l'application
+     * Permet d'afficher la liste des matériels de l'application
      * 
      * @Route("/admin/equipment/list/{page<\d+>?1}", name="AdminEquipment.index")
      * @IsGranted("ROLE_ADMIN"))
@@ -38,7 +38,7 @@ class AdminEquipmentController extends AbstractController
      * 
      * @Route("/admin/equipment/delete/{id}", name="AdminEquipment.delete")
      */
-    public function delete($id, Request $request, EntityManagerInterface $em, EquipmentRepository $equipmentRepo)
+    public function delete($id, EntityManagerInterface $em, EquipmentRepository $equipmentRepo)
     {
         $equipment = $equipmentRepo->find($id);
 
