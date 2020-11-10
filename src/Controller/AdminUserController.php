@@ -21,13 +21,8 @@ class AdminUserController extends AbstractController
      * @Route("/admin/user/list/{page<\d+>?1}", name="AdminUser.index")
      * @IsGranted("ROLE_ADMIN"))
      */
-    public function index($page, PaginationService $paginator, UserRepository $repo)
+    public function index($page, PaginationService $paginator)
     {
-        // $u = $repo->find(470);
-        // $i = $this->getUser();
-
-        // dd($u, $i);
-
         $paginator->setEntityClass(User::class)
             ->setCurrentPage($page)
             ->setLimit(10);
