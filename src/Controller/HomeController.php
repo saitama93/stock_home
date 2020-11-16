@@ -10,6 +10,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class HomeController extends AbstractController
 {
     /**
+     * Page d'accueil
+     * 
      * @Route("/", name="Home.index")
      * @IsGranted("ROLE_USER"))
      */
