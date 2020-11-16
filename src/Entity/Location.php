@@ -28,6 +28,12 @@ class Location
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Votre libellé doit contenir au moins {{ limit }} caractères.",
+     *      maxMessage = "Votre libellé doit contenir au plus {{ limit }} caractères.",
+     *      allowEmptyString = false)
      */
     private $wording;
 

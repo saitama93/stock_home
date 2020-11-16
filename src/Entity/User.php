@@ -16,6 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * fields={"email"},
  * message="Un autre utilisateur s'est déjà inscrit avec cette adresse mail, merci de la modifier !"
  * )
+ * 
+ *  @UniqueEntity(
+ * fields={"username"},
+ * message="Un autre utilisateur s'est déjà inscrit avec ce pseudo, merci de le modifier !"
+ * )
  */
 class User implements UserInterface
 {

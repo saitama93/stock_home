@@ -7,6 +7,7 @@ use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TypeRepository::class)
@@ -27,6 +28,12 @@ class Type
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 255,
+     *      minMessage = "Votre libellé doit contenir au moins {{ limit }} caractères.",
+     *      maxMessage = "Votre libellé doit contenir au plus {{ limit }} caractères.",
+     *      allowEmptyString = false)
      */
     private $wording;
 
