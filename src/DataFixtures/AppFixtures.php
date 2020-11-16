@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
         $admin->setFirstName("Igal")
         ->setLastName("ILMI AMIR")
         ->setEmail("igal@stock.fr")
-        ->setPassword($this->encoder->encodePassword($admin, "password123!"))
+        ->setPassword($this->encoder->encodePassword($admin, "Passw0rd!"))
         ->setPresent(1)
         ->setUsername("Igal")
         ->addUserRole($adminRole, $userRole);
@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         $public->setFirstName("Public")
         ->setLastName("PUBLIC")
         ->setEmail("public@stock.fr")
-        ->setPassword($this->encoder->encodePassword($public, "password123!"))
+        ->setPassword($this->encoder->encodePassword($public, "Passw0rd!"))
         ->setPresent(1)
         ->setUsername("Publique")
         ->addUserRole($publicRole, $userRole);
@@ -206,7 +206,7 @@ class AppFixtures extends Fixture
         for ($z = 1; $z <= 50; $z++) {
             $user = new User();
             $genre = $faker->randomElement($genres);
-            $hash = $this->encoder->encodePassword($user, 'password123!');
+            $hash = $this->encoder->encodePassword($user, "Passw0rd!");
 
             $user->setFirstName($faker->firstName($genre))
                 ->setLastName($faker->lastName)
@@ -276,7 +276,7 @@ class AppFixtures extends Fixture
                     ->setStatus($faker->randomElement($statutesCollection))
                     ->setType($faker->randomElement($typesCollection))
                     ->setSerialNumber(\uniqid())
-                    ->setManipulatedAt($faker->dateTime('now', null))
+                    ->setManipulatedAt($faker->dateTimeBetween('-5 years','now',null))
                     ->setDeleted(mt_rand(0,1));
 
             $keywords = "{$equipment->getMark()->getWording()}, {$equipment->getSpecificity()->getWording()}";

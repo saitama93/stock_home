@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Equipment;
 use App\Repository\UserRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,7 +28,7 @@ class AdminArchiveController extends AbstractController
     /**
      * Liste des comptes utilisateurs archivé
      * 
-     * @Route("/admin/archive/list/{page<\d+>?1}", name="AdminArchive.users")
+     * @Route("/admin/archive/user/list/{page<\d+>?1}", name="AdminArchive.users")
      * @IsGranted("ROLE_ADMIN"))
      */
     public function users($page, PaginationService $paginator)
@@ -92,5 +93,23 @@ class AdminArchiveController extends AbstractController
         );
 
         return $this->redirectToRoute('AdminUser.index');
+    }
+
+     /**
+     * Permet d'afficher la liste des types de l'application
+     * 
+     * @Route("/admin/archive/equipment/list/{page<\d+>?1}", name="AdminArchive.equipments")
+     * @IsGranted("ROLE_ADMIN"))
+     */
+    public function equipments($page, PaginationService $paginator)
+    {
+        $paginator->setEntityClass(Equipment::class)
+            ->setCurrentPage($page)
+            ->setLimit(10);
+
+        return $this->render('admin/equipment/index.html.twig',[
+            'paginator' => $paginator,
+            'deleted' => true
+        ]);
     }
 }
