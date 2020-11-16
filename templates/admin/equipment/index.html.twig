@@ -12,7 +12,7 @@
         {% if deleted == false %}
             <h1 class="h1 my-3">Gestion des matériels</h1>
 
-             <a href="{# {{ path('AdminEquipment.add') }} #}" class="btn btn-success my-5">
+             <a href="{{ path('AdminEquipment.add') }}" class="btn btn-success my-5">
 			<i class="fas fa-plus-circle"></i>
 		</a>
         {% else %}
@@ -31,7 +31,6 @@
 					<th>Lieu de stock</th>
 					<th>Statut</th>
 					<th>Manipulé le</th>
-					<th>Supprimé</th>
 					<th class="text-center">Action</th>
 				</tr>
 			</thead>
@@ -41,23 +40,48 @@
 
                         <tr>
                             <td>{{ equipment.id }}</td>
-                            <td>{{ equipment.type.wording }}</td>
-                            <td>{{ equipment.user.fullName }}</td>
-                            <td>{{ equipment.mark.wording }}</td>
-                            <td>{{ equipment.specificity.wording }}</td>
-                            <td>{{ equipment.location.wording }}</td>
-                            <td>{{ equipment.status.wording }}</td>
-                            <td>{{ equipment.manipulatedAt | date ('D/M/Y H:i') }}</td>
-                            <td>
-                                {% if equipment.deleted == true %}
-                                    Oui
-                                {% else %}
-                                    Non
-                                {% endif %}
 
-                            </td>
+                            {% if equipment.type.wording is defined and equipment.type.wording is not null %}
+                                <td>{{ equipment.type.wording }}</td>
+                            {% else %}
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+
+                            {% if equipment.user.fullName is defined and equipment.user.fullName is not null %}
+                                <td>{{ equipment.user.fullName }}</td>
+                            {% else %}
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+
+                            {% if equipment.mark.wording is defined and equipment.mark.wording is not null %}
+                                <td>{{ equipment.mark.wording }}</td>
+                            {% else %}
+
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+                            
+                            {% if equipment.specificity.wording is defined and  equipment.specificity.wording is not null %}
+                                <td>{{ equipment.specificity.wording }}</td>
+                            {% else %}
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+
+                            {% if equipment.location.wording is defined and equipment.location.wording is not null %}
+                                <td>{{ equipment.location.wording }}</td>
+                            {% else %}
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+
+                            {% if equipment.status.wording is defined and equipment.status.wording is not null %}
+                                <td>{{ equipment.status.wording }}</td>
+                            {% else %}
+                                <td><small>Nom renseigné</small></td>
+                            {% endif %}
+
+                            <td>{{ equipment.manipulatedAt | date ('d/m/Y H:i') }}</td>
+        
                             <td class="text-center">
-                                <a title="Modifier les informations" href="{# {{ path('AdminEquipment.edit', {'id' : equipment.id}) }} #}" class="btn btn-primary mr-2" title="Modifier le matériel">
+                                <a title="Modifier les informations" href="{{ path('AdminEquipment.edit', {'id' : equipment.id}) }}" class="btn btn-primary mr-2" title="Modifier le matériel">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="{{ path('AdminEquipment.delete', {'id' : equipment.id}) }}" class="btn btn-danger ml-2" title="Enlever du stock">

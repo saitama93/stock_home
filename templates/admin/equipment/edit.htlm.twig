@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Modification de Matériel
+{% endblock %}
+
+{% block body %}
+    
+    <div class="container-fuild my-5">
+
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Modification de matériel', GoBack : 'Liste des matériel', Link : path('AdminEquipment.index') } %}
+
+        <div class="container">
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+            {{form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use DateTimeInterface;
 use App\Entity\Equipment;
 use App\Form\EquipmentType;
+use App\Form\UpdateEquipmentType;
 use App\Service\PaginationService;
 use App\Repository\EquipmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +32,78 @@ class AdminEquipmentController extends AbstractController
         return $this->render('admin/equipment/index.html.twig',[
             'paginator' => $paginator,
             'deleted' => false
+        ]);
+    }
+
+   
+    /**
+     * Permet d'ajouter un matériel
+     * 
+     * @Route("/admin/equipment/add", name="AdminEquipment.add")
+     */
+   public function add (Request $request, EntityManagerInterface $em){
+
+        $equipment = new Equipment();
+        
+        $form = $this->createForm(EquipmentType::class, $equipment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $keywords = "{$equipment->getMark()->getWording()}, {$equipment->getSpecificity()->getWording()}";
+            $equipment->setDeleted(false)
+                ->setManipulatedAt(new \DateTime())
+                ->setSerialNumber(\uniqid())
+                ->setKeywords($keywords);
+
+            $em->persist($equipment);
+            $em->flush();
+
+            $this->addFlash(
+                'success', 
+                "Le matériel a bien été ajouté!"
+            );
+
+            return $this->redirectToRoute('AdminEquipment.index');
+        }
+
+        return $this->render('admin/equipment/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+   }
+   
+   
+    /**
+     * Permet de modifier un matériel
+     * 
+     * @Route("/admin/equipment/edit/{id}", name="AdminEquipment.edit")
+     */
+    public function edit($id, Request $request, EntityManagerInterface $em, EquipmentRepository $equipmentRepo){
+
+        $equipment = $equipmentRepo->find($id);
+
+        $form = $this->createForm(UpdateEquipmentType::class, $equipment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $keywords = "{$equipment->getMark()->getWording()}, {$equipment->getSpecificity()->getWording()}";
+            $equipment->setKeywords($keywords);
+
+            $em->persist($equipment);
+            $em->flush();
+
+            $this->addFlash(
+                'success', 
+                "Le matériel a bien été mmodifié!"
+            );
+
+            return $this->redirectToRoute('AdminEquipment.index');
+        }
+
+        return $this->render('admin/equipment/edit.htlm.twig', [
+            'form' => $form->createView()
         ]);
     }
 

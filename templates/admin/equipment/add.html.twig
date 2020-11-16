@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Nouveau Matériel
+{% endblock %}
+
+{% block body %}
+    
+    <div class="container-fuild my-5">
+
+        {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Nouveau matériel', GoBack : 'Liste des matériel', Link : path('AdminEquipment.index') } %}
+
+        <div class="container">
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">AJouter</button>
+
+            {{form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
