@@ -93,23 +93,6 @@ class AdminUserController extends AbstractController
                 $password = $passwordEncoder->encodePassword($user, $plainPasswd);
                 $user->setPassword($password);
 
-                // if ($user->getId() != 1 && $user->getId() != 2) {
-                //     switch ($_POST['roles']) {
-                //         case 0:
-                //             $user->setRoles(array());
-                //             break;
-                //         case 1:
-                //             $user->setRoles(array('ROLE_ADMIN'));
-                //             break;
-                //         case 2:
-                //             $user->setRoles(array('ROLE_PUBLIC'));
-                //             break;
-                //         default:
-                //             $user->setRoles(array());
-                //             break;
-                //     }
-                // }
-
                 $user->setPresent(1);
                 $em->persist($user);
                 $em->flush();
