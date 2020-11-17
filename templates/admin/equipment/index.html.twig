@@ -7,16 +7,17 @@
 {% block body %}
     <div class="container-fluid">
 
-       {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Matériels', GoBack : 'Gestion', Link : path('AdminDashboard.index') } %}
-
         {% if deleted == false %}
+         {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Matériels en stock', GoBack : 'Gestion', Link : path('AdminDashboard.index') } %}
             <h1 class="h1 my-3">Gestion des matériels</h1>
 
              <a href="{{ path('AdminEquipment.add') }}" class="btn btn-success my-5">
 			<i class="fas fa-plus-circle"></i>
 		</a>
         {% else %}
+            {% include "admin/partials/miniHeader.html.twig"  with { Title  : 'Matériels hors stock', GoBack : 'Archive', Link : path('AdminArchive.index') } %}
             <h1 class="h1 my-3">Archive des matériels</h1>
+            
         {% endif %}
 
 

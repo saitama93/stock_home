@@ -99,7 +99,7 @@ class AdminArchiveController extends AbstractController
      * Permet d'afficher la liste des types de l'application
      * 
      * @Route("/admin/archive/equipment/list/{page<\d+>?1}", name="AdminArchive.equipments")
-     * @IsGranted("ROLE_ADMIN"))
+     * @IsGranted("ROLE_ADMIN")
      */
     public function equipments($page, PaginationService $paginator)
     {

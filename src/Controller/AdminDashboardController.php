@@ -11,7 +11,8 @@ class AdminDashboardController extends AbstractController
     /**
      * Page d'accueilde l'admin avec stats
      * 
-     * @Route("/admin/home", name="AdminDashboard.home") 
+     * @Route("/admin/home", name="AdminDashboard.home")
+     * @IsGranted("ROLE_ADMIN") 
      */
     public function home(){
 

@@ -7,6 +7,7 @@ use App\Entity\Equipment;
 use App\Form\EquipmentType;
 use App\Form\UpdateEquipmentType;
 use App\Service\PaginationService;
+use App\Repository\StatusRepository;
 use App\Repository\EquipmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +41,7 @@ class AdminEquipmentController extends AbstractController
      * Permet d'ajouter un matériel
      * 
      * @Route("/admin/equipment/add", name="AdminEquipment.add")
+     * @IsGranted("ROLE_ADMIN")
      */
    public function add (Request $request, EntityManagerInterface $em){
 
@@ -68,7 +70,8 @@ class AdminEquipmentController extends AbstractController
         }
 
         return $this->render('admin/equipment/add.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'deleted' => false
         ]);
    }
    
@@ -77,6 +80,7 @@ class AdminEquipmentController extends AbstractController
      * Permet de modifier un matériel
      * 
      * @Route("/admin/equipment/edit/{id}", name="AdminEquipment.edit")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit($id, Request $request, EntityManagerInterface $em, EquipmentRepository $equipmentRepo){
 
@@ -111,12 +115,18 @@ class AdminEquipmentController extends AbstractController
      * Permet de supprimer un matériel
      * 
      * @Route("/admin/equipment/delete/{id}", name="AdminEquipment.delete")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function delete($id, EntityManagerInterface $em, EquipmentRepository $equipmentRepo)
-    {
+    public function delete($id, EntityManagerInterface $em, EquipmentRepository $equipmentRepo, StatusRepository $statusRepo)
+    {   
+        $status = $statusRepo->findOneBy(['wording' => 'A réformer']);
         $equipment = $equipmentRepo->find($id);
+        $user = $this->getUser();
 
-        $equipment->setDeleted(true);
+        $equipment->setDeleted(true)
+            ->setManipulatedAt(new \DateTime)
+            ->setStatus($status)
+            ->setUser($user);
 
         $em->persist($equipment);
         $em->flush();
