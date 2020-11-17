@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -33,11 +33,18 @@ class User implements UserInterface
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=255)
+     * 
      * @Assert\Regex(
      *     pattern="/[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/",
      *     message="Ne doit pas contenir de chiffre ou de charactères spéciaux"
      * )
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Le nom doit contenir au moins {{ limit }} caractères.",
+     *      maxMessage = "Le nom doit contenir au plus {{ limit }} caractères.",
+     *      allowEmptyString = false)
      */
     private $firstName;
 
@@ -49,6 +56,13 @@ class User implements UserInterface
      *     pattern="/[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/",
      *     message="Ne doit pas contenir de chiffre ou de charactères spéciaux"
      * )
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Le prénom doit contenir au moins {{ limit }} caractères.",
+     *      maxMessage = "Le prénom doit contenir au plus {{ limit }} caractères.",
+     *      allowEmptyString = false)
      */
     private $lastName;
 
