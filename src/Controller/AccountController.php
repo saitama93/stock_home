@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -38,6 +39,7 @@ class AccountController extends AbstractController
      * Permet de visualiser le profil de l'utilisateur connecté
      * 
      * @Route("/account/profile", name="Account.profile")
+     * @IsGranted("ROLE_USER")
      */
     public function profile()
     {
