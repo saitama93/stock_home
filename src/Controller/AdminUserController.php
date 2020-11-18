@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AccountType;
+use App\Service\PdfService;
 use App\Form\RegistrationType;
 use App\Service\MailerService;
 use Symfony\Component\Mime\Email;
@@ -44,7 +45,7 @@ class AdminUserController extends AbstractController
      * @Route("/admin/user/add", name="AdminUser.add")
      * @IsGranted("ROLE_ADMIN"))
      */
-    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, RoleRepository $roleRepo, MailerService $mailerService)
+    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, RoleRepository $roleRepo, MailerService $mailerService, PdfService $pdfService)
     {
 
         $user = new User();
@@ -74,12 +75,16 @@ class AdminUserController extends AbstractController
                 'igal@stock.com',
                 'igalilmi32-b20815@inbox.mailtrap.io',
                 'Création de compte',
-                
-            );       
+                $user->getId()              
+            );
+            
+            // $pdfService->download($user->getUsername(), 'admin/pdf/new_account.html.twig',[
+            //     'user' => $user
+            // ]);
 
             $this->addFlash(
                 'success',
-                "Compte de {$user->getFullName()} créé et un mail vous a été envoyé avec vos identifiants"
+                "Compte de {$user->getFullName()} créé et un mail a été envoyé à l'adresse suivante {$user->getEmail()}."
             );
 
             return $this->redirectToRoute('AdminUser.index');
