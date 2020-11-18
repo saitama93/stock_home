@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AccountType;
 use App\Form\RegistrationType;
+use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,22 +41,25 @@ class AdminUserController extends AbstractController
      * @Route("/admin/user/add", name="AdminUser.add")
      * @IsGranted("ROLE_ADMIN"))
      */
-    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, RoleRepository $roleRepo)
     {
 
         $user = new User();
+        $roleUser = $roleRepo->findOneBy(['title' => 'ROLE_USER']);
 
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPasswd = $user->getPassword();
+            $plainPasswd = 'password123!';
             $user->setPlainPassword($plainPasswd);
 
             $password = $passwordEncoder->encodePassword($user, $plainPasswd);
             $user->setPassword($password);
 
-            $user->setPresent(1);
+            $user->addUserRole($roleUser);
+
             $em->persist($user);
             $em->flush();
             $this->addFlash(
@@ -77,56 +82,55 @@ class AdminUserController extends AbstractController
      * @IsGranted("ROLE_ADMIN"))
      * 
      */
-    public function edit(Request $request, $id, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, UserRepository $userRepo)
+    public function edit(Request $request, $id, EntityManagerInterface $em, UserRepository $userRepo,  UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $userRepo->find($id);
-        $check = '';
         $form =  $this->createForm(RegistrationType::class, $user);
-        $plainPasswd = $user->getPassword();
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $plainPasswd = $user->getPassword();
-                $user->setPlainPassword($plainPasswd);
-                $password = $passwordEncoder->encodePassword($user, $plainPasswd);
-                $user->setPassword($password);
 
-                $user->setPresent(1);
-                $em->persist($user);
-                $em->flush();
-                $this->addFlash(
-                    'success',
-                    "Informations du compte de {$user->getFullName()} modifiées."
-                );
+        if($form->isSubmitted() && $form->isValid()) {
 
-                //Création et envoie de mail    
+            $plainPasswd = 'password123!';
+            $user->setPlainPassword($plainPasswd);
+            
+            $password = $passwordEncoder->encodePassword($user, $plainPasswd);
+            $user->setPassword($password);
+            
+            $user->setPlainPassword($plainPasswd);
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                "Informations du compte de {$user->getFullName()} modifiées."
+            );
 
-                // sendMail prend en parametres:
-                // Le message du mail
-                // L'expéditeur du mail
-                // Le destinataire du mail
-                // L'objet du mail
-                // Le nom de l'expéditeur
-                // $mailerService->sendMail(
-                //     'Voici vos informations utilisateurs afin d\'accéder à l\'application',
-                //     'rononoa.zoro@mugiwara.fr',
-                //     'igal.ilmiamir@doubs.fr',
-                //     'Création de compte',
-                //     'Zoro'
-                // );
+            //Création et envoie de mail    
 
-                return $this->redirectToRoute('AdminUser.index');
-            }
+            // sendMail prend en parametres:
+            // Le message du mail
+            // L'expéditeur du mail
+            // Le destinataire du mail
+            // L'objet du mail
+            // Le nom de l'expéditeur
+            // $mailerService->sendMail(
+            //     'Voici vos informations utilisateurs afin d\'accéder à l\'application',
+            //     'rononoa.zoro@mugiwara.fr',
+            //     'igal.ilmiamir@doubs.fr',
+            //     'Création de compte',
+            //     'Zoro'
+            // );
+
+            return $this->redirectToRoute('AdminUser.index');
         }
+
         return $this->render('admin/user/edit.html.twig', [
             'id' => $id,
             'user' => $user,
-            'check' => $check,
             'form' => $form->createView(),
         ]);
-    }
+}
 
     /**
      * Permet de supprimer un utilisateur avec page de confirmation
