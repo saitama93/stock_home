@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Form\RegistrationType;
+use App\Service\MailerService;
+use Symfony\Component\Mime\Email;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +44,7 @@ class AdminUserController extends AbstractController
      * @Route("/admin/user/add", name="AdminUser.add")
      * @IsGranted("ROLE_ADMIN"))
      */
-    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, RoleRepository $roleRepo)
+    public function add(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, RoleRepository $roleRepo, MailerService $mailerService)
     {
 
         $user = new User();
@@ -62,6 +65,18 @@ class AdminUserController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
+
+            //Création et envoie de mail    
+
+            $mailerService->sendMail(
+                'Information lié à votre compte utilisateur',
+                'igal@stock.com',
+                'igalilmi32-b20815@inbox.mailtrap.io',
+                'Création de compte',
+                
+            );       
+
             $this->addFlash(
                 'success',
                 "Compte de {$user->getFullName()} créé et un mail vous a été envoyé avec vos identifiants"
