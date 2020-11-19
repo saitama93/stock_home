@@ -73,7 +73,7 @@ class AdminUserController extends AbstractController
             $mailerService->sendMail(
                 'Information lié à votre compte utilisateur',
                 'igal@stock.com',
-                'igalilmi32-b20815@inbox.mailtrap.io',
+                'igal.IlmiAmir@doubs.fr',
                 'Création de compte',
                 $user->getId()              
             );
